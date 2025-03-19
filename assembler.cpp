@@ -76,19 +76,7 @@ void handleInstruction(const vector<string> &v, vector<string> &current, int pro
         processOperand(v[2], current, programCounter, modifierBits, isImmediate); // Source operand
         current.insert(current.begin() + 1, isImmediate ? "1" : "0"); // Insert addressing mode bit
     }
-    
-    else if ( opcode == "B"||opcode=="CALL") {
-    // Determine the PC-relative offset
-    int targetAddress = stoi(v[1]); // Target address
-    int pcRelativeOffset = targetAddress - (programCounter + 4); // Calculate PC-relative offset
-
-    // Convert the PC-relative offset to a 27-bit binary string
-    string offsetBits = bitset<27>(pcRelativeOffset).to_string(); // Convert offset to 27-bit binary
-
-    // Add only the 27-bit offset to the current vector (opcode is already handled in main)
-    current.push_back(offsetBits);
-    }
-    else if (opcode == "BGT" ||opcode=="BEQ") {
+    else if (opcode == "BGT" ||opcode=="BEQ"||opcode == "B"||opcode=="CALL") {
         // Extract the target label from the instruction
         const string &label = v[1];
 
